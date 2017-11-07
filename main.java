@@ -17,8 +17,8 @@ class JavaClient{
 
         ;
 
-        //JavaTCP jtcp=new JavaTCP();
-        //String data[];
+        JavaTCP jtcp=new JavaTCP();
+        jtcp.tcp_text(jtcp.tcp_getServeerInformation(""));
 
 
 	}
@@ -37,6 +37,9 @@ class JavaTCP{
             int sendport=Integer.parseInt(splitstr[1]);
             String data=splitstr[2];
             int receport=Integer.parseInt(splitstr[3]);
+
+
+            System.out.println(host+"/"+sendport+"/"+data+"/"+receport);
 
             //指定サーバにデータを送る
 			Socket s = new Socket(host, sendport);
@@ -78,7 +81,7 @@ class JavaTCP{
             String sendport=new String(in.readLine());
 
             String data;
-            if(sendData==null)
+            if(sendData=="")
             {
                 System.out.println("input sendData"+crlf);
                 in=new BufferedReader(new InputStreamReader(System.in));
