@@ -21,12 +21,16 @@ class JavaClient{
         JavaTCP jtcp=new JavaTCP();
         Java_myBaseSystem jmyBase=new Java_myBaseSystem();
 
-        System.out.println(
-            
-            jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt",
-            jmyBase.textInfo("inpu data plese")))
+        
 
-        );
+        for(int i=0;i<10;i++)
+        {
+            String str=String.valueOf(i);
+            System.out.println(
+                jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt",str))
+                
+                        );
+        }
         
 
 	}
@@ -48,6 +52,8 @@ class Java_myBaseSystem{
             return e.toString();
         }
     }
+
+
 
 }
 
