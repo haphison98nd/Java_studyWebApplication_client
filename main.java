@@ -22,6 +22,24 @@ class JavaClient{
 	}
 }
 
+class Java_myBaseSystem{
+    public String textInfo(String message)
+    {
+        //改行コードの取得
+        String crlf = System.getProperty("line.separator");
+
+        try {
+            System.out.println(message+crlf);
+            BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
+            String input_data=new String(in.readLine());
+            return input_data;
+            
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+}
+
 
 class JavaTCP{
     
@@ -35,6 +53,8 @@ class JavaTCP{
             int sendport=Integer.parseInt(splitstr[1]);
             String data=splitstr[2];
             int receport=Integer.parseInt(splitstr[3]);
+
+            System.out.println(host+"/"+sendport+"/"+data+"/"+receport);
 
             //指定サーバにデータを送る
 			Socket s = new Socket(host, sendport);
@@ -62,34 +82,17 @@ class JavaTCP{
     
     public String tcp_getServerInformation(String sendData)
     {
+        Java_myBaseSystem myBase=new Java_myBaseSystem();
+
         try {
-            //改行コードの取得
-            String crlf = System.getProperty("line.separator");
-
-            System.out.println("input host address"+crlf);
-            BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
-            String host=new String(in.readLine());
-
-
-            System.out.println("input host port"+crlf);
-            in=new BufferedReader(new InputStreamReader(System.in));
-            String sendport=new String(in.readLine());
-
+            
+            //TCPの情報を尋ねる
+            String host=myBase.textInfo("input host address");
+            String sendport=myBase.textInfo("input host port");
             String data;
-            if(sendData=="")
-            {
-                System.out.println("input sendData"+crlf);
-                in=new BufferedReader(new InputStreamReader(System.in));
-                data=new String(in.readLine());
-            }
-            else{
-                data=sendData;
-            }
-
-
-            System.out.println("input receport"+crlf);
-            in=new BufferedReader(new InputStreamReader(System.in));
-            String receport=new String(in.readLine());
+            if(sendData==""){data=myBase.textInfo("input sendData");}
+            else{data=sendData;}
+            String receport=myBase.textInfo("input receport");
 
             //CSV形式で文字列を生成
             String ServerInformation=output_csv(host, sendport, data, receport);
