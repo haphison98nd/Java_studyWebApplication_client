@@ -15,10 +15,8 @@ import java.net.Socket;
 class JavaClient{
 	public static void main(String args[]){
 
-        ;
-
         JavaTCP jtcp=new JavaTCP();
-        jtcp.tcp_text(jtcp.tcp_getServeerInformation(""));
+        jtcp.tcp_text(jtcp.tcp_getServerInformation(""));
 
 
 	}
@@ -37,9 +35,6 @@ class JavaTCP{
             int sendport=Integer.parseInt(splitstr[1]);
             String data=splitstr[2];
             int receport=Integer.parseInt(splitstr[3]);
-
-
-            System.out.println(host+"/"+sendport+"/"+data+"/"+receport);
 
             //指定サーバにデータを送る
 			Socket s = new Socket(host, sendport);
@@ -65,7 +60,7 @@ class JavaTCP{
 		}
     }
     
-    public String tcp_getServeerInformation(String sendData)
+    public String tcp_getServerInformation(String sendData)
     {
         try {
             //改行コードの取得
@@ -97,10 +92,7 @@ class JavaTCP{
             String receport=new String(in.readLine());
 
             //CSV形式で文字列を生成
-            String ServerInformation=host+","
-                                    +sendport+","
-                                    +data+","
-                                    +receport;
+            String ServerInformation=output_csv(host, sendport, data, receport);
 
             return ServerInformation;
             
@@ -110,5 +102,12 @@ class JavaTCP{
    
     }
 
-}
+    //CSV形式で文字列を生成
+    public String output_csv(String host,String sendport,String data,String receport)
+    {
+        String csvStr;
+        csvStr=host+","+sendport+","+data+","+receport;
+        return csvStr;
+    }
 
+}
