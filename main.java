@@ -19,9 +19,15 @@ class JavaClient{
 	public static void main(String args[]){
 
         JavaTCP jtcp=new JavaTCP();
-        jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt"));
+        Java_myBaseSystem jmyBase=new Java_myBaseSystem();
 
+        System.out.println(
+            
+            jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt",
+            jmyBase.textInfo("inpu data plese")))
 
+        );
+        
 
 	}
 }
@@ -47,6 +53,8 @@ class Java_myBaseSystem{
 
 
 class JavaTCP{
+
+    Java_myBaseSystem myBase=new Java_myBaseSystem();
     
     public String tcp_text(String serverInformation)
     {
@@ -87,7 +95,6 @@ class JavaTCP{
     
     public String tcp_getServerInformation(String sendData)
     {
-        Java_myBaseSystem myBase=new Java_myBaseSystem();
 
         try {
             
@@ -120,7 +127,7 @@ class JavaTCP{
 
 
     //ファイルからTCP情報を読み取る
-    public String loadProfile_tcpInformation(String filepass)
+    public String loadProfile_tcpInformation(String filepass,String sendData)
     {
 
         String tcpInformation="";
@@ -135,6 +142,12 @@ class JavaTCP{
                 tcpInformation=tcpInformation+str+",";
               }
               br.close();
+
+              String data;
+              if(sendData==""){data=myBase.textInfo("input sendData");}
+              else{data=sendData;}
+              tcpInformation=tcpInformation+data;
+
             }else{
               System.out.println("ファイルが見つからないか開けません");
             }
@@ -147,6 +160,7 @@ class JavaTCP{
 
         return tcpInformation;
     }
+
     //ファイルチェッカー
     private boolean checkBeforeReadfile(File file){
         if (file.exists()){if (file.isFile() && file.canRead()){return true;}}return false;}
