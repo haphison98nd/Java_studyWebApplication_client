@@ -11,12 +11,16 @@ import java.net.UnknownHostException;
 import java.net.SocketException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 class JavaClient{
 	public static void main(String args[]){
 
         JavaTCP jtcp=new JavaTCP();
-        jtcp.tcp_text(jtcp.tcp_getServerInformation(""));
+        jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt"));
+
 
 
 	}
@@ -38,6 +42,7 @@ class Java_myBaseSystem{
             return e.toString();
         }
     }
+
 }
 
 
@@ -51,10 +56,10 @@ class JavaTCP{
 
             String host=splitstr[0];
             int sendport=Integer.parseInt(splitstr[1]);
-            String data=splitstr[2];
-            int receport=Integer.parseInt(splitstr[3]);
+            int receport=Integer.parseInt(splitstr[2]);
+            String data=splitstr[3];
 
-            System.out.println(host+"/"+sendport+"/"+data+"/"+receport);
+            System.out.println(host+"/"+sendport+"/"+receport+"/"+data);
 
             //指定サーバにデータを送る
 			Socket s = new Socket(host, sendport);
@@ -89,13 +94,13 @@ class JavaTCP{
             //TCPの情報を尋ねる
             String host=myBase.textInfo("input host address");
             String sendport=myBase.textInfo("input host port");
+            String receport=myBase.textInfo("input receport");
             String data;
             if(sendData==""){data=myBase.textInfo("input sendData");}
             else{data=sendData;}
-            String receport=myBase.textInfo("input receport");
 
             //CSV形式で文字列を生成
-            String ServerInformation=output_csv(host, sendport, data, receport);
+            String ServerInformation=output_csv(host,sendport,receport,data);
 
             return ServerInformation;
             
@@ -106,11 +111,43 @@ class JavaTCP{
     }
 
     //CSV形式で文字列を生成
-    public String output_csv(String host,String sendport,String data,String receport)
+    public String output_csv(String host,String sendport,String receport,String data)
     {
         String csvStr;
-        csvStr=host+","+sendport+","+data+","+receport;
+        csvStr=host+","+sendport+","+receport+","+data;
         return csvStr;
     }
 
+
+    //ファイルからTCP情報を読み取る
+    public String loadProfile_tcpInformation(String filepass)
+    {
+
+        String tcpInformation="";
+        
+        try{
+            File file = new File(filepass);
+            String str;
+            if (checkBeforeReadfile(file)){
+              BufferedReader br = new BufferedReader(new FileReader(file));
+              while((str = br.readLine()) != null){
+                System.out.println(str);
+                tcpInformation=tcpInformation+str+",";
+              }
+              br.close();
+            }else{
+              System.out.println("ファイルが見つからないか開けません");
+            }
+          }catch(FileNotFoundException e){
+            System.out.println(e);
+          }catch(IOException e){
+            System.out.println(e);
+          }
+
+
+        return tcpInformation;
+    }
+    //ファイルチェッカー
+    private boolean checkBeforeReadfile(File file){
+        if (file.exists()){if (file.isFile() && file.canRead()){return true;}}return false;}
 }
