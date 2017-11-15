@@ -19,20 +19,12 @@ class JavaClient{
 	public static void main(String args[]){
 
         JavaTCP jtcp=new JavaTCP();
-        Java_myBaseSystem jmyBase=new Java_myBaseSystem();
-
-        
-
-        for(int i=0;i<10;i++)
-        {
-            String str=String.valueOf(i);
-            System.out.println(
-                jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt",str))
-                
-                        );
-        }
-        
-
+        //Java_myBaseSystem jmyBase=new Java_myBaseSystem();
+        String str=String.valueOf(10);
+        System.out.println
+        (
+            jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt",""))
+        );
 	}
 }
 
