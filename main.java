@@ -1,9 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.io.InputStream;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.io.DataOutputStream;
 
 class JavaClient{
 	public static void main(String args[]){
