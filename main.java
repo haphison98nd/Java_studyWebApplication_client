@@ -9,7 +9,7 @@ class JavaClient{
         System.out.println
         (
             jtcp.tcp_text(jtcp.loadProfile_tcpInformation("profile.txt",""))
-        );
+        ) ;
 	}
 }
 
@@ -50,26 +50,28 @@ class JavaTCP{
             //BufferedReader br = new BufferedReader(is);
             
 
-            //指定サーバにデータを送る
+            //new socket
 			Socket s = new Socket(host, port);
-            OutputStream os = s.getOutputStream();
             
-            InputStream sok_is = s.getInputStream();
-			InputStreamReader sok_isr = new InputStreamReader(sok_is);
-			BufferedReader sok_br = new BufferedReader(sok_isr);
+            //stream
+            OutputStream osStr = s.getOutputStream();
+            InputStream is = s.getInputStream();
+            //output server
+            osStr.write( data.getBytes() , 0 , data.length() ); 
+            //osStr.flush();
+
+            for(int i=0;i<1000;i++){;};
             
-            //data = br.readLine();	//キー1行入力
-            os.write(data.getBytes());//送信
-            
-            String receive = sok_br.readLine();//受信データ取得
+            //String receive = s.readLine();//受信データ取得
             //System.out.println("受信『" + receive + "』");
-    
+            byte[] inputBuff = new byte[512];
+            int recvByteLength = is.read(inputBuff);
+            String buff = new String(inputBuff , 0 , recvByteLength);
 
 
-            s.shutdownOutput();
             s.close();
-            return receive;
-
+            //return receive;
+            return buff;
 
 		}
 		catch(Exception e){
