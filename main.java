@@ -42,13 +42,10 @@ class JavaTCP{
             //文字列を分割（csv方式）
             String splitstr[]=serverInformation.split(",",0);
             String host=splitstr[0];
-            int port=Integer.parseInt(splitstr[1]);
+            //int port=Integer.parseInt(splitstr[1]);
+            int port=6005;
             String data=splitstr[2];
             System.out.println(host+"/"+port+"/"+data);
-
-            //InputStreamReader is = new InputStreamReader(data);
-            //BufferedReader br = new BufferedReader(is);
-            
 
             //new socket
 			Socket s = new Socket(host, port);
@@ -58,16 +55,12 @@ class JavaTCP{
             InputStream is = s.getInputStream();
             //output server
             osStr.write( data.getBytes() , 0 , data.length() ); 
-            //osStr.flush();
 
             for(int i=0;i<1000;i++){;};
-            
-            //String receive = s.readLine();//受信データ取得
-            //System.out.println("受信『" + receive + "』");
+            //receve
             byte[] inputBuff = new byte[512];
             int recvByteLength = is.read(inputBuff);
             String buff = new String(inputBuff , 0 , recvByteLength);
-
 
             s.close();
             //return receive;
