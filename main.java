@@ -42,8 +42,7 @@ class JavaTCP{
             //文字列を分割（csv方式）
             String splitstr[]=serverInformation.split(",",0);
             String host=splitstr[0];
-            //int port=Integer.parseInt(splitstr[1]);
-            int port=6005;
+            int port=Integer.parseInt(splitstr[1]);
             String data=splitstr[2];
             System.out.println(host+"/"+port+"/"+data);
 
@@ -127,7 +126,7 @@ class JavaTCP{
               tcpInformation=tcpInformation+data;
 
             }else{
-              System.out.println("ファイルが見つからないか開けません");
+              System.out.println("File not found");
             }
           }catch(FileNotFoundException e){
             System.out.println(e);
